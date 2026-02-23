@@ -3,7 +3,7 @@ import sqlite3
 #
 # Function
 #
-def fetch_all_rows(dbConn):
+def fetch_all_rows(dbConn, args=[]):
     query =
     """
     SELECT
@@ -13,7 +13,7 @@ def fetch_all_rows(dbConn):
     return None
 
 
-def fetch_n_rows(dbConn):
+def fetch_n_rows(dbConn, args=[]):
     query =
     """
     SELECT
