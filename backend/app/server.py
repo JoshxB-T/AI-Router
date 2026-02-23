@@ -1,11 +1,15 @@
 import sqlite3
-import objecttier
+import app.objecttier
 import time
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI(title="AI Router")
+dbConn = sqlite3.connect("")
+cursor = None
+
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
@@ -16,6 +20,18 @@ async def add_process_time_header(request: Request, call_next):
 
     return response
 
+
 @app.get("/")
 def root():
     return {"root": "Hello!"}
+
+
+@app.get("/status")
+def status():
+    return {"status": "ok"}
+
+
+@app.get("/search")
+def search(video_game: str):
+    
+    pass
