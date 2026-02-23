@@ -18,5 +18,8 @@ pip install -r requirements.txt
 
 # At any time to deactivate virtual environment
 deactivate
+
+# Start server
+uvicorn app.server:app --host <IP_Address> --reload --port <port_number>
 ```
 
