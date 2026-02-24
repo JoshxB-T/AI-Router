@@ -7,8 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(title="AI Router")
-dbConn = sqlite3.connect("")
-cursor = None
+dbConn = sqlite3.connect("data/")
 
 
 @app.middleware("http")
@@ -33,5 +32,10 @@ def status():
 
 @app.get("/search")
 def search(video_game: str):
-    
     pass
+
+
+@app.get("/num_video_games")
+def find_stats()
+    video_games = objectier.num_video_games(dbConn)
+
