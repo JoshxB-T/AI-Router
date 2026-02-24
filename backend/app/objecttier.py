@@ -62,3 +62,22 @@ class VideoGame:
     def Global_Sales(self):
         return self._Global_Sales
 
+
+def num_video_games(dbConn):
+    try:
+        query = """
+        Select Count(id)
+        From VideoGames
+        ;
+        """
+
+        row = datatier.select_one_row(dbConn, query, None)
+
+        return row[0]
+
+    except Exception as err:
+        print("num_video_games failed: ", err)
+        return -1
+
+    finally:
+        pass
