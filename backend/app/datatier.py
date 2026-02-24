@@ -3,19 +3,49 @@ import sqlite3
 #
 # Function
 #
-def fetch_all_rows(dbConn, args=[]):
-    query = """
-    SELECT
+def select_all_rows(dbConn, query, params=None):
+    dbCursor = dbConn.cursor()
 
-    """
+    try:
+        if params:
+            dbCursor.execute(query, params)
+        else:
+            dbCursor.execute(query)
 
-    return None
+        row = dbCursor.fetchall()
+
+        if row:
+            return row
+        else:
+            return ()
+
+    execept Exception as err:
+        print("select_all_rows failed: ", err)
+        return None
+
+    finally:
+        dbCursor.close()
 
 
-def fetch_n_rows(dbConn, args=[]):
-    query = """
-    SELECT
+def select_one_row(dbConn, query, params=None):
+    dbCursor = dbConn.cursor()
 
-    """
+    try:
+        if params:
+            dbCursor.execute(query, params)
+        else:
+            dbCursor.execute(query)
 
-    return None
+        row = dbCursor.fetchone()
+
+        if row:
+            return row
+        else:
+            return ()
+
+    execept Exception as err:
+        print("select_one_row failed: ", err)
+        return None
+
+    finally:
+        dbCursor.close()
