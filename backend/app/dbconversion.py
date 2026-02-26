@@ -6,11 +6,11 @@ CSV_PATH = "data/video_games.csv"
 DB_PATH = "data/video_games.db"
 
 
-def read_csv(fname):
+def read_csv():
     dbConn = sqlite3.connect(DB_PATH)
     dbCursor = dbConn.cursor()
 
-    with open(fname, mode='r', newline='', encoding='utf-8') as f:
+    with open(CSV_PATH, mode='r', newline='', encoding='utf-8') as f:
         csv_content = csv.DictReader(f)
 
         for row in csv_content:
@@ -27,8 +27,8 @@ def read_csv(fname):
     dbConn.close()
 
 
-def create_db(fname):
-    dbConn = sqlite3.connect(fname)
+def create_db():
+    dbConn = sqlite3.connect(DB_PATH)
     dbCursor = dbConn.cursor()
 
     query = """
@@ -55,8 +55,8 @@ def create_db(fname):
 
 
 def main():
-    create_db(DB_PATH)
-    read_csv(CSV_PATH)
+    create_db()
+    read_csv()
 
 
 if __name__ == "__main__":
