@@ -4,6 +4,7 @@ from app import objecttier
 from app.dbconnection import get_db_conn
 from app.db import DB
 from app.worker import WORKER
+from app.models import APIResponse, VideoGameCount, VideoGame
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,7 +32,7 @@ def startup():
 
 @app.get("/")
 def root():
-    return {"root": "Hello!"}
+    return {"status:": "ok"}
 
 
 @app.get("/status")
@@ -39,13 +40,22 @@ def status():
     return {"status": "ok"}
 
 
-@app.get("/num_video_games")
+@app.get(
+    "/num_video_games",
+    response_model=APIResponse[VideoGameCount]
+)
 def stats(db = DB.dep):
     count = db.scalar(
-        "SELECT COUNT(*) FROM video_games"
+        "SELECT COUNT(*) FROM video_games;"
     )
 
-    return {"result": count}
+    return APIResponse(
+        success=True,
+        data=VideoGameCount(
+            num_video_games=count
+        ),
+        error=None
+    )
 
 
 def fake_ai(prompt):
@@ -87,4 +97,24 @@ def stream():
     return StreamingResponse(
         stream_words(),
         media_type="text/plain"
+    )
+
+
+@app.get(
+    "/games",
+    response_model=APIResponse[list[VideoGame]]
+)
+def games(db = DB.dep):
+    rows = db[
+        """
+        SELECT Name, Year_of_Release 
+        FROM video_games
+        LIMIT 10;
+        """
+    ]
+
+    return APIResponse(
+        success=True,
+        data=rows,
+        error=None
     )
