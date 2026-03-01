@@ -1,6 +1,6 @@
 import sqlite3, time, os
 
-from app import objecttier
+#from app import objecttier
 from app.dbconnection import get_db_conn
 from app.db import DB
 from app.worker import WORKER
@@ -37,7 +37,11 @@ def root():
 
 @app.get("/status")
 def status():
-    return {"status": "ok"}
+    return APIResponse(
+        success=True,
+        data="ok",
+        error=None
+    )
 
 
 @app.get(
