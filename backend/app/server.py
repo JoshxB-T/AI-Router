@@ -127,10 +127,23 @@ def search_game(
 
     rows = db(query, params)
 
+    valid_games = []
+    skipped_rows = 0
+
+    for row in rows:
+        try:
+            game = VideoGame(**row)
+            valid_games.append(game)
+
+        except ValidationError as e:
+            print("Invalid row skipped:", row)
+            print("Validation Error: ", e)
+            skipped_rows += 1
+
     return APIResponse(
         success=True,
         data=rows,
-        error=None
+        error=None if skipped_rows == 0 else f"{skipped_rows} invalid rows skipped."
     )
 
 
