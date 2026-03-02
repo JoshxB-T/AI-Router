@@ -17,5 +17,5 @@ class VideoGameCount(BaseModel):
 
 
 class VideoGame(BaseModel):
-    Name: str
-    Year_of_Release: int
+    Name: Optional[str] = None
+    Year_of_Release: Optional[int] = None

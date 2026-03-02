@@ -1,6 +1,7 @@
 import sqlite3, time, os
 
-#from app import objecttier
+from typing import Optional
+
 from app.dbconnection import get_db_conn
 from app.db import DB
 from app.worker import WORKER
@@ -32,7 +33,11 @@ def startup():
 
 @app.get("/")
 def root():
-    return {"status:": "ok"}
+    return APIResponse(
+            success=True,
+            data="root",
+            error=None
+    )
 
 
 @app.get("/status")
@@ -116,6 +121,58 @@ def games(db = DB.dep):
         LIMIT 10;
         """
     ]
+
+    return APIResponse(
+        success=True,
+        data=rows,
+        error=None
+    )
+
+@app.get(
+    "/search_game",
+    response_model=APIResponse[list[VideoGame]]
+)
+def search_game(
+    name: Optional[str]=None,
+    genre: Optional[str]=None,
+    year: Optional[str]=None,
+
+    db= DB.dep
+):
+
+    query = """
+        SELECT *
+        FROM video_games
+        WHERE 1 = 1
+    """
+
+    params = {}
+
+    # ---------- Filters ----------
+    if name:
+        query += """
+        AND Name LIKE :name
+        """
+        params["name"] = f"%{name}%"
+
+    if genre:
+        query += """
+        AND Genre = :genre
+        """
+        params["genre"] = genre
+
+    if year:
+        query +=  """
+        AND Year_of_Release >= :year
+        """
+        params["year"] = year
+
+    # ---------- Execute ----------
+    rows = db(query, params)
+
+    for r in rows:
+        if not isinstance(r["Year_of_Release"], int):
+            print("Bad Row:", r)
 
     return APIResponse(
         success=True,
