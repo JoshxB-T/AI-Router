@@ -86,6 +86,32 @@ def games(db = DB.dep):
         error=None
     )
 
+
+def add_filter(query, params, condition, key, value):
+    query += condition
+    params[key] = value
+
+    return query
+
+
+def validate_rows(model, rows):
+    from pydantic import ValidationError
+
+    valid = []
+    skipped = 0
+
+    for row in rows:
+        try: 
+            valid.append(model(**row))
+
+        except ValidationError as e:
+            print("Invalid row skipped:", row)
+            print("Validation Error: ", e)
+            skipped += 1
+
+    return valid, skipped
+
+
 @app.get(
     "/search_game",
     response_model=APIResponse[list[VideoGame]]
@@ -108,41 +134,29 @@ def search_game(
 
     # ---------- Filters ----------
     if name:
-        query += """
+        condition = """
         AND Name LIKE :name
         """
-        params["name"] = f"%{name}%"
+        query = add_filter(query, params, condition, "name", f"%{name}%")
 
     if genre:
-        query += """
+        condition = """
         AND Genre = :genre
         """
-        params["genre"] = genre
+        query = add_filter(query, params, condition, "genre", genre)
 
     if year:
-        query +=  """
+        condition =  """
         AND Year_of_Release >= :year
         """
-        params["year"] = year
+        query = add_filter(query, params, condition, "year", year)
 
     rows = db(query, params)
-
-    valid_games = []
-    skipped_rows = 0
-
-    for row in rows:
-        try:
-            game = VideoGame(**row)
-            valid_games.append(game)
-
-        except ValidationError as e:
-            print("Invalid row skipped:", row)
-            print("Validation Error: ", e)
-            skipped_rows += 1
+    valid_games, skipped_rows = validate_rows(VideoGame, rows)
 
     return APIResponse(
         success=True,
-        data=rows,
+        data=valid_games,
         error=None if skipped_rows == 0 else f"{skipped_rows} invalid rows skipped."
     )
 
