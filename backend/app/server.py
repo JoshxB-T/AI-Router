@@ -67,48 +67,6 @@ def stats(db = DB.dep):
     )
 
 
-def fake_ai(prompt):
-    time.sleep(5)
-
-    return f"AI Response for: {prompt}"
-
-
-@app.post("/ai")
-def ai(prompt: str):
-    job_id = WORKER.submit(
-        fake_ai,
-        prompt
-    )
-
-    return {"job_id": job_id}
-
-
-@app.get("/job/{job_id}")
-def job(job_id: str):
-    result = WORKER.get(job_id)
-
-    if not result:
-        return {"error": "not found"}
-
-    return result
-
-
-def stream_words():
-    words = ["Hello", " ", "world", "!"]
-
-    for w in words:
-        yield w
-        time.sleep(1)
-
-
-@app.get("/stream")
-def stream():
-    return StreamingResponse(
-        stream_words(),
-        media_type="text/plain"
-    )
-
-
 @app.get(
     "/games",
     response_model=APIResponse[list[VideoGame]]
@@ -174,3 +132,46 @@ def search_game(
         data=rows,
         error=None
     )
+
+
+def fake_ai(prompt):
+    time.sleep(5)
+
+    return f"AI Response for: {prompt}"
+
+
+@app.post("/ai")
+def ai(prompt: str):
+    job_id = WORKER.submit(
+        fake_ai,
+        prompt
+    )
+
+    return {"job_id": job_id}
+
+
+@app.get("/job/{job_id}")
+def job(job_id: str):
+    result = WORKER.get(job_id)
+
+    if not result:
+        return {"error": "not found"}
+
+    return result
+
+
+def stream_words():
+    words = ["Hello", " ", "world", "!"]
+
+    for w in words:
+        yield w
+        time.sleep(1)
+
+
+@app.get("/stream")
+def stream():
+    return StreamingResponse(
+        stream_words(),
+        media_type="text/plain"
+    )
+
