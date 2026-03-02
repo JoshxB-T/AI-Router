@@ -18,4 +18,12 @@ class VideoGameCount(BaseModel):
 
 class VideoGame(BaseModel):
     Name: Optional[str] = None
+    Platform: Optional[str] = None 
     Year_of_Release: Optional[int] = None
+    Genre: Optional[str] = None
+    Publisher: Optional[str] = None
+    NA_Sales: Optional[float] = None
+    EU_Sales: Optional[float] = None
+    JP_Sales: Optional[float] = None
+    Other_Sales: Optional[float] = None
+    Global_Sales: Optional[float] = None

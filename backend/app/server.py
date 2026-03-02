@@ -167,12 +167,7 @@ def search_game(
         """
         params["year"] = year
 
-    # ---------- Execute ----------
     rows = db(query, params)
-
-    for r in rows:
-        if not isinstance(r["Year_of_Release"], int):
-            print("Bad Row:", r)
 
     return APIResponse(
         success=True,
