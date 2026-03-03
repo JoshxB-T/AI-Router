@@ -117,9 +117,10 @@ def validate_rows(model, rows):
     response_model=APIResponse[list[VideoGame]]
 )
 def search_game(
-    name: Optional[str]=None,
-    genre: Optional[str]=None,
-    year: Optional[str]=None,
+    name: Optional[str] = None,
+    genre: Optional[str] = None,
+    year: Optional[str] = None,
+    publisher: Optional[str] = None,
 
     db= DB.dep
 ):
@@ -150,6 +151,12 @@ def search_game(
         AND Year_of_Release >= :year
         """
         query = add_filter(query, params, condition, "year", year)
+
+    if publisher:
+        condition = """
+        AND Publisher = :publisher
+        """
+        query = add_filter(query, params, condition, "publisher", publisher)
 
     rows = db(query, params)
     valid_games, skipped_rows = validate_rows(VideoGame, rows)
