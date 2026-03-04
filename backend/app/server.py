@@ -88,7 +88,7 @@ def games(db = DB.dep):
 
 
 def add_filter(query, params, condition, key, value):
-    query += condition
+    query += ("\n\t" + condition)
     params[key] = value
 
     return query
@@ -135,27 +135,19 @@ def search_game(
 
     # ---------- Filters ----------
     if name:
-        condition = """
-        AND Name LIKE :name
-        """
+        condition = "AND Name LIKE :name"
         query = add_filter(query, params, condition, "name", f"%{name}%")
 
     if genre:
-        condition = """
-        AND Genre = :genre
-        """
+        condition = "AND Genre = :genre"
         query = add_filter(query, params, condition, "genre", genre)
 
     if year:
-        condition =  """
-        AND Year_of_Release >= :year
-        """
+        condition =  "AND Year_of_Release >= :year"
         query = add_filter(query, params, condition, "year", year)
 
     if publisher:
-        condition = """
-        AND Publisher = :publisher
-        """
+        condition = "AND Publisher = :publisher"
         query = add_filter(query, params, condition, "publisher", publisher)
 
     rows = db(query, params)
