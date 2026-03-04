@@ -1,5 +1,6 @@
 backend/app/__pycache__/
 backend/app/makefile
+backend/app/data/.old_video_games.zip
 
 frontend/node_modules/
 frontend/expo-env.d.ts
