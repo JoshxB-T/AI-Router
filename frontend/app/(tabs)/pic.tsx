@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useState } from 'react';
 
 import Button from '@/components/Button';
 import ImageViewer from '@/components/ImageViewer';
@@ -7,6 +8,8 @@ import ImageViewer from '@/components/ImageViewer';
 const PlaceholderImage = require('@/assets/images/background.png');
 
 export default function PicScreen() {
+    const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+
     const pickImageAsync = async() => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
@@ -15,6 +18,7 @@ export default function PicScreen() {
         });
 
         if (!result.canceled) {
+            setSelectedImage(result.assets[0].uri);
             console.log(result);
         } else {
             alert('You did not select any image.');
@@ -24,10 +28,10 @@ export default function PicScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <ImageViewer imgSource={PlaceholderImage} />
+                <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
             </View>
             <View style={styles.footerContainer}>
-                <Button theme="primary" label="Choose a photo" />
+                <Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
                 <Button label="Use this photo" />
             </View>
         </View>
