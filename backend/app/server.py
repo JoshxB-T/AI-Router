@@ -87,13 +87,6 @@ def games(db = DB.dep):
     )
 
 
-def add_filter(query, params, condition, key, value):
-    query += ("\n\t" + condition)
-    params[key] = value
-
-    return query
-
-
 def validate_rows(model, rows):
     from pydantic import ValidationError
 
@@ -125,30 +118,33 @@ def search_game(
     db= DB.dep
 ):
 
-    query = """
-        SELECT *
-        FROM video_games
-        WHERE 1 = 1
-    """
+    query = "SELECT * FROM video_games"
 
+    conditions = []
     params = {}
 
     # ---------- Filters ----------
     if name:
-        condition = "AND Name LIKE :name"
-        query = add_filter(query, params, condition, "name", f"%{name}%")
+        conditions.append("Name LIKE :name")
+        params["name"] = f"%{name}%"
 
     if genre:
-        condition = "AND Genre = :genre"
-        query = add_filter(query, params, condition, "genre", genre)
+        conditions.append("Genre = :genre")
+        params["genre"] = genre
 
     if year:
-        condition =  "AND Year_of_Release >= :year"
-        query = add_filter(query, params, condition, "year", year)
+        conditions.append("Year_of_Release >= :year")
+        params["year"] = year
 
     if publisher:
-        condition = "AND Publisher = :publisher"
-        query = add_filter(query, params, condition, "publisher", publisher)
+        conditions.append("Publisher = :publisher")
+        params["publisher"] = publisher
+
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
+
+    print("query:", query)
+    print("params", params)
 
     rows = db(query, params)
     valid_games, skipped_rows = validate_rows(VideoGame, rows)
