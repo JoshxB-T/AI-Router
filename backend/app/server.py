@@ -12,8 +12,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
 
-app = FastAPI(title="AI Router")
 DB_PATH = "app/data/video_games.db"
+app = FastAPI(title="AI Router")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
@@ -196,4 +203,3 @@ def stream():
         stream_words(),
         media_type="text/plain"
     )
-

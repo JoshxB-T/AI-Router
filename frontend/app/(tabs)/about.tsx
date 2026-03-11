@@ -6,22 +6,20 @@ export default function AboutScreen() {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        async function loadData() {
-            try {
-                const data = await getRoot();
-                setMessage(data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        loadData();
+        fetch("http://10.0.0.24:8000/")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                console.log(data.data);
+                setMessage(data.data);
+            })
+            .catch(err => console.error(err));
     }, []);
 
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Top</Text>
-            <Text style={styles.text}>{message}</Text>
+            <Text style={styles.text}>I {message} I</Text>
             <Text style={styles.text}>Bottom</Text>
         </View>
     );
