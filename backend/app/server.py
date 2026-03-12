@@ -5,7 +5,7 @@ from typing import Optional
 from app.dbconnection import get_db_conn
 from app.db import DB
 from app.worker import WORKER
-from app.models import APIResponse, VideoGameCount, VideoGame
+from app.models import APIResponse, VideoGameStats, VideoGameCount, VideoGame
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -57,10 +57,35 @@ def status():
 
 
 @app.get(
+        "/stats",
+        response_model=APIResponse[VideoGameStats]
+)
+def stats(db = DB.dep):
+    row = db[
+        """
+        SELECT
+            COUNT(*) AS Total_Games,
+            COUNT(DISTINCT Platform) AS Platforms,
+            COUNT(DISTINCT Publisher) AS Publishers,
+            COUNT(DISTINCT Genre) AS Genres
+        FROM video_games;
+        """
+    ][0]
+
+    stats = VideoGameStats(**row)
+
+    return APIResponse(
+        success=True,
+        data=stats,
+        error=None
+    )
+
+
+@app.get(
     "/num_video_games",
     response_model=APIResponse[VideoGameCount]
 )
-def stats(db = DB.dep):
+def num_video_games(db = DB.dep):
     count = db.scalar(
         "SELECT COUNT(*) FROM video_games;"
     )

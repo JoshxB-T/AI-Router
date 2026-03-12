@@ -12,6 +12,13 @@ class APIResponse(GenericModel, Generic[T]):
     error: Optional[str]
 
 
+class VideoGameStats(BaseModel):
+    Total_Games: int
+    Platforms: int
+    Publishers: int
+    Genres: int
+
+
 class VideoGameCount(BaseModel):
     num_video_games: int
 
