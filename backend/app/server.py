@@ -5,7 +5,7 @@ from typing import Optional
 from app.dbconnection import get_db_conn
 from app.db import DB
 from app.worker import WORKER
-from app.models import APIResponse, VideoGameStats, VideoGameCount, VideoGame
+from app.models import APIResponse, DashboardAnalytics, VideoGameCount, VideoGame
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -57,11 +57,11 @@ def status():
 
 
 @app.get(
-        "/stats",
-        response_model=APIResponse[VideoGameStats]
+        "/analytics/dashboard",
+        response_model=APIResponse[DashboardAnalytics]
 )
-def stats(db = DB.dep):
-    row = db[
+def dashboard(db = DB.dep):
+    stats = db[
         """
         SELECT
             COUNT(*) AS Total_Games,
@@ -72,11 +72,45 @@ def stats(db = DB.dep):
         """
     ][0]
 
-    stats = VideoGameStats(**row)
+    top_games = db[
+        """
+        SELECT Name, Global_Sales
+        FROM video_games
+        ORDER BY Global_Sales DESC
+        LIMIT 5;
+        """
+    ]
+
+    top_platforms = db[
+        """
+        SELECT Platform, COUNT(*) As Games
+        FROM video_games
+        GROUP BY Platform
+        ORDER BY Games DESC
+        LIMIT 5;
+        """
+    ]
+
+    top_genres = db[
+        """
+        SELECT Genre, COUNT(*) AS Games
+        FROM video_games
+        GROUP BY Genre
+        ORDER BY Games DESC
+        LIMIT 5;
+        """
+    ]
+
+    analytics = DashboardAnalytics(
+        Stats=stats,
+        Top_Games=top_games,
+        Top_Platforms=top_platforms,
+        Top_Genres=top_genres
+    )
 
     return APIResponse(
         success=True,
-        data=stats,
+        data=analytics,
         error=None
     )
 
