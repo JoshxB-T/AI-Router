@@ -81,7 +81,7 @@ def stats(db = DB.dep):
 def games(db = DB.dep):
     rows = db[
         """
-        SELECT Name, Year_of_Release 
+        SELECT id, Name, Year_of_Release 
         FROM video_games
         LIMIT 10;
         """

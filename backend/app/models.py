@@ -17,6 +17,7 @@ class VideoGameCount(BaseModel):
 
 
 class VideoGame(BaseModel):
+    id: Optional[float] = None
     Name: Optional[str] = None
     Platform: Optional[str] = None 
     Year_of_Release: Optional[int] = None
