@@ -26,20 +26,20 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="about"
+                name="search"
                 options={{
-                    title: 'About',
+                    title: 'Search',
                     tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24} />
+                        <Ionicons name={focused ? 'search' : 'search-outline'} color={color} size={24} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name="pic"
+                name="profile"
                 options={{
-                    title: 'Pic',
+                    title: 'Profile',
                     tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'image-outline' : 'image-outline'} color={color} size={24} />
+                        <Ionicons name={focused ? 'person-circle' : 'person-circle-outline'} color={color} size={24} />
                     ),
                 }}
             />
