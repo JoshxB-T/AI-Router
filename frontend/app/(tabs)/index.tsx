@@ -6,7 +6,7 @@ export default function Index() {
         <View style={styles.container}>
             <Text style={styles.text}>Home Screen</Text>
             <Link href="/search" style={styles.button}>
-                Go to About Screen
+                Go to Search Screen
             </Link>
         </View>
     );
