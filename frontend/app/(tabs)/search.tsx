@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, View, StyleSheet } from 'react-native';
-import { getRoot } from '../../api/userService';
-
-import { API_URL } from "../../api/config";
-import { ENDPOINTS } from "../../api/endpoints";
-
+import { getGames } from '../../api/userService';
 
 type VideoGame = {
     id: number;
@@ -12,19 +8,16 @@ type VideoGame = {
     Year_of_Release: number | null;
 };
 
-
 export default function AboutScreen() {
     const [message, setMessage] = useState<VideoGame[]>([]);
 
     const getResponse = async() => {
-        const response = await fetch("http://10.0.0.24:8000/games")
-        const json = await response.json();
-
-        if (!json.success) {
-            throw new Error(json.error || "API error");
+        try {
+            const games = await getGames();
+            setMessage(games);
+        } catch (err) {
+            console.error(err);
         }
-        
-        setMessage(json.data);
     };
 
     useEffect(() => {
