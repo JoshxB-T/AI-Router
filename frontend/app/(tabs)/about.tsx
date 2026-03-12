@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { FlatList, Text, View, StyleSheet } from 'react-native';
 import { getRoot } from '../../api/userService';
 
+import { API_URL } from "../../api/config";
+import { ENDPOINTS } from "../../api/endpoints";
+
+
+type VideoGame = {
+    id: number;
+    Name: string;
+    Year_of_Release: number | null;
+};
+
+
 export default function AboutScreen() {
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState<VideoGame[]>([]);
+
+    const getResponse = async() => {
+        const response = await fetch("http://10.0.0.24:8000/games")
+        const json = await response.json();
+
+        if (!json.success) {
+            throw new Error(json.error || "API error");
+        }
+        
+        setMessage(json.data);
+    };
 
     useEffect(() => {
-        fetch("http://10.0.0.24:8000/")
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                console.log(data.data);
-                setMessage(data.data);
-            })
-            .catch(err => console.error(err));
+        getResponse();
     }, []);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Top</Text>
-            <Text style={styles.text}>I {message} I</Text>
-            <Text style={styles.text}>Bottom</Text>
+            <FlatList
+                data={message}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={ ({ item}) => (
+                    <View style={styles.item}>
+                        <Text style={styles.text}>{item.Name} ({item.Year_of_Release ?? "Unknown"}) </Text>
+                    </View>
+                )}
+            />
         </View>
     );
 }
@@ -28,9 +49,15 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 22,
         backgroundColor: '#25292e',
-        justifyContent: 'center',
-        alignItems: 'center',
+    },
+
+    item: {
+        padding: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: "#444",
+        width: "100%",
     },
 
     text: {
