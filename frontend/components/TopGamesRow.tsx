@@ -5,7 +5,7 @@ import Card from "./Card";
 export default function TopGamesRow({ games }) {
     return (
         <View style={styles.section}>
-            <Text style={styles.title}>Top Games</Text>
+            <Text style={styles.title}>Top {games.length} Games</Text>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {games.map((game, index) => (

@@ -5,11 +5,11 @@ import Card from "./Card";
 export default function GenreList({ genres }) {
     return (
         <View style={styles.section}>
-            <Text style={styles.title}>Top Genres</Text>
+            <Text style={styles.title}>Top {genres.length} Genres</Text>
 
             {genres.map((g, index) => (
                 <Card key={index}>
-                    <Text>{g.Genre}</Text>
+                    <Text style={styles.name}>{g.Genre}</Text>
                     <Text style={styles.number}>{g.Games} games</Text>
                 </Card>
             ))}
@@ -28,7 +28,14 @@ const styles = StyleSheet.create({
         marginBottom: 8
     },
 
+    name: {
+        fontSize: 14,
+        color: "#666",
+        marginBottom: 6
+    },
+
     number: {
+        fontSize: 16,
         fontWeight: "bold"
     }
 });

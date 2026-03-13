@@ -77,7 +77,7 @@ def dashboard(db = DB.dep):
         SELECT Name, Global_Sales
         FROM video_games
         ORDER BY Global_Sales DESC
-        LIMIT 5;
+        LIMIT 10;
         """
     )
 

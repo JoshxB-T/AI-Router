@@ -5,11 +5,11 @@ import Card from "./Card";
 export default function PlatformList({ platforms }) {
     return (
         <View style={styles.section}>
-            <Text style={styles.title}>Top Platforms</Text>
+            <Text style={styles.title}>Top {platforms.length} Platforms</Text>
 
             {platforms.map((p, index) => (
                 <Card key={index}>
-                    <Text>{p.Platform}</Text>
+                    <Text style={styles.name}>{p.Platform}</Text>
                     <Text style={styles.number}>{p.Games} games</Text>
                 </Card>
             ))}
@@ -28,7 +28,14 @@ const styles = StyleSheet.create({
         marginBottom: 8
     },
 
+    name: {
+        fontSize: 14,
+        color: "#666",
+        marginBottom: 6
+    },
+
     number: {
-        fontWeight: "bold",
+        fontSize: 16,
+        fontWeight: "bold"
     }
 });
