@@ -8,3 +8,7 @@ export function getRoot() {
 export function getGames() {
     return apiRequest(ENDPOINTS.GAMES);
 }
+
+export function getAnalyticsDashboard() {
+    return apiRequest(ENDPOINTS.ANALYTICS);
+}
