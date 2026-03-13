@@ -9,8 +9,8 @@ export default function GenreList({ genres }) {
 
             {genres.map((g, index) => (
                 <Card key={index}>
-                    <Text style={styles.name}>{g.Genre}</Text>
-                    <Text style={styles.number}>{g.Games} games</Text>
+                    <Text style={styles.name}>{g.genre}</Text>
+                    <Text style={styles.number}>{g.games} games</Text>
                 </Card>
             ))}
         </View>

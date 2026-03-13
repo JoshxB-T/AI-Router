@@ -12,40 +12,41 @@ class APIResponse(GenericModel, Generic[T]):
     error: Optional[str] = None
 
 
-class VideoGameStats(BaseModel):
-    Total_Games: int
-    Platforms: int
-    Publishers: int
-    Genres: int
-
-
-class TopGame(BaseModel):
-    Name: str
-    Global_Sales: float
-
-
-class TopPlatform(BaseModel):
-    Platform: str
-    Games: int
-
-
-class TopGenre(BaseModel):
-    Genre: str
-    Games: int
-
-
-class DashboardAnalytics(BaseModel):
-    Stats: VideoGameStats
-    Top_Games: List[TopGame]
-    Top_Platforms: List[TopPlatform]
-    Top_Genres: List[TopGenre]
-
-
 class VideoGameCount(BaseModel):
     num_video_games: int
 
 
 class VideoGame(BaseModel):
     id: int
-    Name: str
-    Year_of_Release: int
+    name: str
+    year_of_release: int
+
+
+class VideoGameStats(BaseModel):
+    total_games: int
+    platforms: int
+    publishers: int
+    genres: int
+
+
+class TopGame(BaseModel):
+    name: str
+    global_sales: float
+
+
+class TopPlatform(BaseModel):
+    platform: str
+    games: int
+
+
+class TopGenre(BaseModel):
+    genre: str
+    games: int
+
+
+class DashboardAnalytics(BaseModel):
+    featured_game: VideoGame
+    stats: VideoGameStats
+    top_games: List[TopGame]
+    top_platforms: List[TopPlatform]
+    top_genres: List[TopGenre]

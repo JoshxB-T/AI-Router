@@ -12,3 +12,7 @@ export function getGames() {
 export function getAnalyticsDashboard() {
     return apiRequest(ENDPOINTS.ANALYTICS);
 }
+
+export function getFeatuedGame() {
+    return apiRequest(ENDPOINTS.FEATURED);
+}

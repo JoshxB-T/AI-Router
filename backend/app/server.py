@@ -43,7 +43,6 @@ def root():
     return APIResponse(
             success=True,
             data="root",
-            error=None
     )
 
 
@@ -52,7 +51,6 @@ def status():
     return APIResponse(
         success=True,
         data="ok",
-        error=None
     )
 
 
@@ -61,29 +59,38 @@ def status():
         response_model=APIResponse[DashboardAnalytics]
 )
 def dashboard(db = DB.dep):
+    featured_game = db.one(
+        """
+        SELECT id, Name AS name, Year_of_Release AS year_of_release
+        FROM video_games
+        ORDER BY RANDOM()
+        LIMIT 1;
+        """
+    )
+
     stats = db.one(
         """
         SELECT
-            COUNT(*) AS Total_Games,
-            COUNT(DISTINCT Platform) AS Platforms,
-            COUNT(DISTINCT Publisher) AS Publishers,
-            COUNT(DISTINCT Genre) AS Genres
+            COUNT(*) AS total_games,
+            COUNT(DISTINCT Platform) AS platforms,
+            COUNT(DISTINCT Publisher) AS publishers,
+            COUNT(DISTINCT Genre) AS genres
         FROM video_games;
         """
     )
 
     top_games = db(
         """
-        SELECT Name, Global_Sales
+        SELECT Name AS name, Global_Sales AS global_sales
         FROM video_games
-        ORDER BY Global_Sales DESC
+        ORDER BY global_sales DESC
         LIMIT 10;
         """
     )
 
     top_platforms = db(
         """
-        SELECT Platform, COUNT(*) As Games
+        SELECT Platform as platform, COUNT(*) AS games
         FROM video_games
         GROUP BY Platform
         ORDER BY Games DESC
@@ -93,7 +100,7 @@ def dashboard(db = DB.dep):
 
     top_genres = db(
         """
-        SELECT Genre, COUNT(*) AS Games
+        SELECT Genre as genre, COUNT(*) AS games
         FROM video_games
         GROUP BY Genre
         ORDER BY Games DESC
@@ -102,16 +109,16 @@ def dashboard(db = DB.dep):
     )
 
     analytics = DashboardAnalytics(
-        Stats=stats,
-        Top_Games=top_games,
-        Top_Platforms=top_platforms,
-        Top_Genres=top_genres
+        featured_game=featured_game,
+        stats=stats,
+        top_games=top_games,
+        top_platforms=top_platforms,
+        top_genres=top_genres
     )
 
     return APIResponse(
         success=True,
-        data=analytics,
-        error=None
+        data=analytics
     )
 
 
@@ -128,8 +135,7 @@ def num_video_games(db = DB.dep):
         success=True,
         data=VideoGameCount(
             num_video_games=count
-        ),
-        error=None
+        )
     )
 
 
@@ -149,7 +155,6 @@ def games(db = DB.dep):
     return APIResponse(
         success=True,
         data=rows,
-        error=None
     )
 
 

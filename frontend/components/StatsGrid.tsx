@@ -9,22 +9,22 @@ export default function StatsGrid({ stats }) {
 
             <View style={styles.grid}>
                 <Card style={styles.card}>
-                    <Text style={styles.number}>{stats.Total_Games}</Text>
+                    <Text style={styles.number}>{stats.total_games}</Text>
                     <Text style={styles.label}>Total Games</Text>
                 </Card>
 
                 <Card style={styles.card}>
-                    <Text style={styles.number}>{stats.Platforms}</Text>
+                    <Text style={styles.number}>{stats.platforms}</Text>
                     <Text style={styles.label}>Platforms</Text>
                 </Card>
 
                 <Card style={styles.card}>
-                    <Text style={styles.number}>{stats.Publishers}</Text>
+                    <Text style={styles.number}>{stats.publishers}</Text>
                     <Text style={styles.label}>Publishers</Text>
                 </Card>
 
                 <Card style={styles.card}>
-                    <Text style={styles.number}>{stats.Genres}</Text>
+                    <Text style={styles.number}>{stats.genres}</Text>
                     <Text style={styles.label}>Genres</Text>
                 </Card>
             </View>

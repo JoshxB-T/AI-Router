@@ -10,8 +10,8 @@ export default function TopGamesRow({ games }) {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {games.map((game, index) => (
                     <Card key={index} style={styles.card}>
-                        <Text style={styles.name}>{game.Name}</Text>
-                        <Text style={styles.number}>{game.Global_Sales}M</Text>
+                        <Text style={styles.name}>{game.name}</Text>
+                        <Text style={styles.number}>{game.global_sales}M</Text>
                     </Card>
                 ))}
             </ScrollView>

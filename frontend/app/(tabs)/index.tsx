@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Text, ScrollView, View, StyleSheet } from "react-native";
 
-import { getAnalyticsDashboard } from '../../api/userService';
+import { getAnalyticsDashboard, getFeaturedGame } from '../../api/userService';
 
+import FeaturedBanner from '../../components/FeaturedGameBanner';
 import StatsGrid from '../../components/StatsGrid';
 import TopGamesRow from '../../components/TopGamesRow';
 import PlatformList from '../../components/PlatformList';
@@ -35,13 +36,15 @@ export default function Index() {
 
     return (
         <ScrollView style={styles.container}>
-            <StatsGrid stats={dashboard.Stats} />
+            <FeaturedBanner game={dashboard.featured_game} />
 
-            <TopGamesRow games={dashboard.Top_Games} />
+            <StatsGrid stats={dashboard.stats} />
 
-            <PlatformList platforms={dashboard.Top_Platforms} /> 
+            <TopGamesRow games={dashboard.top_games} />
 
-            <GenreList genres={dashboard.Top_Genres} />
+            <PlatformList platforms={dashboard.top_platforms} /> 
+
+            <GenreList genres={dashboard.top_genres} />
         </ScrollView>
     );
 }

@@ -1,18 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from 'react-native';
 import Card from "./Card";
 
-export default function PlatformList({ platforms }) {
+export default function FeaturedBanner({ game }) {
     return (
         <View style={styles.section}>
-            <Text style={styles.title}>Top {platforms.length} Platforms</Text>
-
-            {platforms.map((p, index) => (
-                <Card key={index}>
-                    <Text style={styles.name}>{p.platform}</Text>
-                    <Text style={styles.number}>{p.games} games</Text>
-                </Card>
-            ))}
+            <Card style={styles.card}>
+                <Text>Featured Game</Text>
+                <Text style={styles.title}>{game.name}</Text>
+                <Text style={styles.name}>{game.year_of_release}</Text>
+            </Card>
         </View>
     );
 }
@@ -21,7 +18,11 @@ const styles = StyleSheet.create({
     section: {
         marginTop: 10
     },
-    
+
+    card: {
+        alignItems: "center"
+    },
+
     title: {
         fontSize: 20,
         fontWeight: "bold",
