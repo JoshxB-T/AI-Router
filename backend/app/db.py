@@ -36,6 +36,12 @@ class DBSession:
     def __getitem__(self, query):
         return self(query)
 
+    
+    def one(self, query, params=None):
+        rows = self(query, params)
+
+        return rows[0] if rows else None
+
 
     def scalar(self, query, params=None):
         cursor = self.conn.execute(query, params or {})
@@ -45,6 +51,12 @@ class DBSession:
 
 
     def write(self, query, params=None):
+        cursor = self.conn.execute(query, params or {})
+
+        return cursor.lastrowid
+
+
+    def insert(self, query, params=None):
         cursor = self.conn.execute(query, params or {})
 
         return cursor.lastrowid

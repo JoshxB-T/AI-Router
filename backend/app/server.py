@@ -61,7 +61,7 @@ def status():
         response_model=APIResponse[DashboardAnalytics]
 )
 def dashboard(db = DB.dep):
-    stats = db[
+    stats = db.one(
         """
         SELECT
             COUNT(*) AS Total_Games,
@@ -70,18 +70,18 @@ def dashboard(db = DB.dep):
             COUNT(DISTINCT Genre) AS Genres
         FROM video_games;
         """
-    ][0]
+    )
 
-    top_games = db[
+    top_games = db(
         """
         SELECT Name, Global_Sales
         FROM video_games
         ORDER BY Global_Sales DESC
         LIMIT 5;
         """
-    ]
+    )
 
-    top_platforms = db[
+    top_platforms = db(
         """
         SELECT Platform, COUNT(*) As Games
         FROM video_games
@@ -89,9 +89,9 @@ def dashboard(db = DB.dep):
         ORDER BY Games DESC
         LIMIT 5;
         """
-    ]
+    )
 
-    top_genres = db[
+    top_genres = db(
         """
         SELECT Genre, COUNT(*) AS Games
         FROM video_games
@@ -99,7 +99,7 @@ def dashboard(db = DB.dep):
         ORDER BY Games DESC
         LIMIT 5;
         """
-    ]
+    )
 
     analytics = DashboardAnalytics(
         Stats=stats,
