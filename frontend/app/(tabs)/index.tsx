@@ -48,14 +48,17 @@ export default function Index() {
                 </Card>
             </View>
 
-            <Card>
+            <View style={styles.section}>
                 <Text style={styles.title}>Top Games</Text>
-                {dashboard.Top_Games.map((game, index) => (
-                    <Text key={index}>
-                        {game.Name} — {game.Global_Sales}M
-                    </Text>
-                ))}
-            </Card>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {dashboard.Top_Games.map((game, index) => (
+                        <Card key={index} style={styles.card}>
+                            <Text style={styles.statLabel}>{game.Name}</Text>
+                            <Text style={styles.statNumber}>{game.Global_Sales}M</Text> 
+                        </Card>
+                    ))}
+                </ScrollView>
+            </View>
 
             <Card>
                 <Text style={styles.title}>Top Platforms</Text>
@@ -70,7 +73,7 @@ export default function Index() {
                 <Text style={styles.title}>Top Genres</Text>
                 {dashboard.Top_Genres.map((g, index) => (
                     <Text key={index}>
-                        {g.Genre} — {g.Games}
+                        {g.Genre} — {g.Games} games
                     </Text>
                 ))}
             </Card>
@@ -105,6 +108,15 @@ const styles = StyleSheet.create({
     statLabel: {
         fontSize: 14,
         color: "#666"
+    },
+
+    section: {
+        marginTop: 10
+    },
+
+    card: {
+        width: 150,
+        marginRight: 12
     },
 
     title: {
