@@ -6,9 +6,9 @@ export default function FeaturedBanner({ game }) {
     return (
         <View style={styles.section}>
             <Card style={styles.card}>
-                <Text>Featured Game</Text>
-                <Text style={styles.title}>{game.name}</Text>
-                <Text style={styles.name}>{game.year_of_release}</Text>
+                <Text style={styles.title}>Featured Game</Text>
+                <Text style={styles.name}>{game.name}</Text>
+                <Text style={styles.number}>{game.year_of_release}</Text>
             </Card>
         </View>
     );
@@ -20,23 +20,27 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        alignItems: "center"
+        alignItems: 'center',
+        marginBottom: 10
     },
 
     title: {
         fontSize: 20,
-        fontWeight: "bold",
-        marginBottom: 8
+        fontWeight: 'bold',
+        marginBottom: 8,
+        textAlign: 'center'
     },
 
     name: {
-        fontSize: 14,
-        color: "#666",
-        marginBottom: 6
+        fontSize: 22,
+        color: '#000',
+        marginBottom: 6,
+        textAlign: 'center'
     },
 
     number: {
-        fontSize: 16,
-        fontWeight: "bold"
+        fontSize: 22,
+        color: '#666',
+        textAlign: 'center'
     }
 });

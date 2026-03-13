@@ -4,8 +4,8 @@ import { getGames } from '../../api/userService';
 
 type VideoGame = {
     id: number;
-    Name: string;
-    Year_of_Release: number | null;
+    name: string;
+    year_of_release: number | null;
 };
 
 export default function AboutScreen() {
@@ -31,7 +31,7 @@ export default function AboutScreen() {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={ ({ item}) => (
                     <View style={styles.item}>
-                        <Text style={styles.text}>{item.Name} ({item.Year_of_Release ?? "Unknown"}) </Text>
+                        <Text style={styles.text}>{item.name} ({item.year_of_release ?? "Unknown"}) </Text>
                     </View>
                 )}
             />

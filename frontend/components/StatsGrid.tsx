@@ -34,7 +34,7 @@ export default function StatsGrid({ stats }) {
 
 const styles = StyleSheet.create({
     section: {
-        marginBottom: 0
+        marginTop: 10
     },
     
     title: {

@@ -146,7 +146,7 @@ def num_video_games(db = DB.dep):
 def games(db = DB.dep):
     rows = db[
         """
-        SELECT id, Name, Year_of_Release 
+        SELECT id, Name AS name, Year_of_Release AS year_of_release
         FROM video_games
         LIMIT 10;
         """
