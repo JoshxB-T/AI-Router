@@ -21,23 +21,38 @@ export default function Index() {
     }, []);
 
     if (!dashboard) {
-        return <Text style={styles.text}>Loading...</Text>;
+        return <View style={styles.container}><Text style={styles.text}>Loading...</Text></View>;
     }
 
     return (
-        <ScrollView style={{ padding: 20 }}>
-            <Card>
-                <Text>Total Games: {dashboard.Stats.Total_Games}</Text>
-                <Text>Platforms: {dashboard.Stats.Platforms}</Text>
-                <Text>Publishers: {dashboard.Stats.Publishers}</Text>
-                <Text>Genres: {dashboard.Stats.Genres}</Text>
-            </Card>
+        <ScrollView style={{ padding: 5 }}>
+            <View style={styles.statsGrid}>
+                <Card style={styles.statCard}>
+                    <Text style={styles.statNumber}>{dashboard.Stats.Total_Games}</Text>
+                    <Text style={styles.statLabel}>Total Games</Text>
+                </Card>
+    
+                <Card>
+                    <Text style={styles.statNumber}>{dashboard.Stats.Platforms}</Text>
+                    <Text style={styles.statLabel}>Platforms</Text>
+                </Card>
+
+                <Card>
+                    <Text style={styles.statNumber}>{dashboard.Stats.Publishers}</Text>
+                    <Text style={styles.statLabel}>Publishers</Text>
+                </Card>
+
+                <Card>
+                    <Text style={styles.statNumber}>{dashboard.Stats.Genres}</Text>
+                    <Text style={styles.statLabel}>Genres</Text>
+                </Card>
+            </View>
 
             <Card>
                 <Text style={styles.title}>Top Games</Text>
                 {dashboard.Top_Games.map((game, index) => (
                     <Text key={index}>
-                        {game.Name} - {game.Global_Sales}M
+                        {game.Name} — {game.Global_Sales}M
                     </Text>
                 ))}
             </Card>
@@ -68,7 +83,28 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#25292e',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+
+    statsGrid: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between"
+    },
+    
+    statCard: {
+        width: "48%",
+        alignItems: "center"
+    },
+    
+    statNumber: {
+        fontSize: 22,
+        fontWeight: "bold"
+    },
+    
+    statLabel: {
+        fontSize: 14,
+        color: "#666"
     },
 
     title: {
@@ -78,12 +114,12 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: '#fff',
+        color: '#fff'
     },
 
     button: {
         fontSize: 20,
         textDecorationLine: 'underline',
-        color: '#fff',
+        color: '#fff'
     },
 });
