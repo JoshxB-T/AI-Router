@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Text, ScrollView, View, StyleSheet } from "react-native";
-import { Link } from 'expo-router';
-import Card from '../../components/Card';
+
+import { getAnalyticsDashboard } from '../../api/userService';
+
 import StatsGrid from '../../components/StatsGrid';
-import ScrollRow from '../../components/ScrollRow';
+import TopGamesRow from '../../components/TopGamesRow';
 import PlatformList from '../../components/PlatformList';
 import GenreList from '../../components/GenreList';
-import { getAnalyticsDashboard } from '../../api/userService';
+
 
 export default function Index() {
     const [dashboard, setDashboard] = useState(null);
@@ -36,7 +37,7 @@ export default function Index() {
         <ScrollView style={styles.container}>
             <StatsGrid stats={dashboard.Stats} />
 
-            <ScrollRow games={dashboard.Top_Games} />
+            <TopGamesRow games={dashboard.Top_Games} />
 
             <PlatformList platforms={dashboard.Top_Platforms} /> 
 
@@ -53,7 +54,8 @@ const styles = StyleSheet.create({
     },
 
     container: {
-        padding: 5,
+        flex: 1,
+        padding: 5
     },
 
     text: {

@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
     
     card: {
         width: 150,
-        marginRight: 12
+        marginRight: 8
     },
     
     name: {
         fontSize: 14,
-        color: "#666"
+        color: "#666",
+        marginBottom: 6
     },
 
     number: {

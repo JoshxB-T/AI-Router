@@ -10,7 +10,7 @@ export default function GenreList({ genres }) {
             {genres.map((g, index) => (
                 <Card key={index}>
                     <Text>{g.Genre}</Text>
-                    <Text>{g.Games} games</Text>
+                    <Text style={styles.number}>{g.Games} games</Text>
                 </Card>
             ))}
         </View>
@@ -26,5 +26,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 8
+    },
+
+    number: {
+        fontWeight: "bold"
     }
 });

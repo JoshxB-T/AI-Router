@@ -10,7 +10,7 @@ export default function PlatformList({ platforms }) {
             {platforms.map((p, index) => (
                 <Card key={index}>
                     <Text>{p.Platform}</Text>
-                    <Text>{p.Games} games</Text>
+                    <Text style={styles.number}>{p.Games} games</Text>
                 </Card>
             ))}
         </View>
@@ -26,5 +26,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 8
+    },
+
+    number: {
+        fontWeight: "bold",
     }
 });
