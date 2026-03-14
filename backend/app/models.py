@@ -44,9 +44,21 @@ class TopGenre(BaseModel):
     games: int
 
 
+class GamesPerYear(BaseModel):
+    year: int
+    games: int
+
+
+class SalesPerYear(BaseModel):
+    year: int
+    sales: int
+
+
 class DashboardAnalytics(BaseModel):
     featured_game: VideoGame
     stats: VideoGameStats
     top_games: List[TopGame]
     top_platforms: List[TopPlatform]
     top_genres: List[TopGenre]
+    games_per_year: List[GamesPerYear]
+    sales_per_year: List[SalesPerYear]

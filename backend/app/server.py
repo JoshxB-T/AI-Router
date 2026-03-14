@@ -108,12 +108,38 @@ def dashboard(db = DB.dep):
         """
     )
 
+    games_per_year = db(
+        """
+        SELECT
+            Year_of_Release AS year,
+            COUNT(*) AS games
+        FROM video_games
+        WHERE Year_of_Release IS NOT NULL
+        GROUP BY Year_of_Release
+        ORDER BY Year_of_Release;
+        """
+    )
+
+    sales_per_year = db(
+        """
+        SELECT
+            Year_of_Release AS year,
+            SUM(Global_Sales) AS sales
+        FROM video_games
+        WHERE Year_of_Release IS NOT NULL
+        GROUP BY Year_of_Release
+        ORDER BY Year_of_Release;
+        """
+    )
+
     analytics = DashboardAnalytics(
         featured_game=featured_game,
         stats=stats,
         top_games=top_games,
         top_platforms=top_platforms,
-        top_genres=top_genres
+        top_genres=top_genres,
+        games_per_year=games_per_year,
+        sales_per_year=sales_per_year
     )
 
     return APIResponse(

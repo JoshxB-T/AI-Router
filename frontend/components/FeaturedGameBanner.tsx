@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import Card from "./Card";
 
-export default function FeaturedBanner({ game }) {
+export default function FeaturedGameBanner({ game }) {
     return (
         <View style={styles.section}>
             <Card style={styles.card}>
@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     },
 
     card: {
+        marginBottom: 25,
+        paddingVertical: 10,
         alignItems: 'center',
         marginBottom: 10
     },
