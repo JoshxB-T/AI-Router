@@ -5,5 +5,6 @@ export const ENDPOINTS = {
     STATUS: `${API_URL}/status`,
     GAMES: `${API_URL}/games`,
     ANALYTICS: `${API_URL}/analytics/dashboard`,
-    FEATURED: `${API_URL}/games/featured`
+    FEATURED: `${API_URL}/games/featured`,
+    SEARCH_GAME: `${API_URL}/search_game`
 }

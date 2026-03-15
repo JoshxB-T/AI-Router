@@ -1,38 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, StyleSheet } from 'react-native';
-import { getGames } from '../../api/userService';
+import React, { useState } from 'react';
+import { FlatList, TextInput, Text, View, StyleSheet } from 'react-native';
+import FilterRow from '../../components/FilterRow';
+import { searchGame } from '../../api/userService';
 
-type VideoGame = {
-    id: number;
-    name: string;
-    year_of_release: number | null;
-};
+export default function SearchScreen() {
+    const [filter, setFilter] = useState("All");
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
 
-export default function AboutScreen() {
-    const [message, setMessage] = useState<VideoGame[]>([]);
+    async function handleSearch(text) {
+        setQuery(text);
 
-    const getResponse = async() => {
         try {
-            const games = await getGames();
-            setMessage(games);
+            const data = await searchGame(text, filter);
+            setResults(data);
         } catch (err) {
             console.error(err);
         }
-    };
-
-    useEffect(() => {
-        getResponse();
-    }, []);
+    }
 
     return (
         <View style={styles.container}>
+            <FilterRow
+                selected={filter}
+                setSelected={setFilter}
+            />
+
+            <TextInput
+                style={styles.input}
+                placeholder="Search games..."
+                value={query}
+                onChangeText={handleSearch}
+            />
+
             <FlatList
-                data={message}
+                data={results}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={ ({ item}) => (
-                    <View style={styles.item}>
-                        <Text style={styles.text}>{item.name} ({item.year_of_release ?? "Unknown"}) </Text>
-                    </View>
+                renderItem={({ item }) => (
+                    <Text style={styles.result}>
+                        {item.Name} ({item.Year_of_Release})
+                    </Text>
                 )}
             />
         </View>
@@ -42,18 +49,20 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 22,
-        backgroundColor: '#25292e',
+        padding: 20
     },
-
-    item: {
-        padding: 12,
+    
+    input: {
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+        padding: 10,
+        marginBottom: 10
+    },
+    
+    result: {
+        paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: "#444",
-        width: "100%",
-    },
-
-    text: {
-        color: '#fff',
-    },
+        borderColor: "#eee"
+    }
 });

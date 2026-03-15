@@ -16,3 +16,7 @@ export function getAnalyticsDashboard() {
 export function getFeatuedGame() {
     return apiRequest(ENDPOINTS.FEATURED);
 }
+
+export function searchGame() {
+    return apiRequest(ENDPOINTS.SEARCH_GAME);
+}
