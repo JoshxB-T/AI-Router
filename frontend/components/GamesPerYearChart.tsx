@@ -9,7 +9,7 @@ export default function GamesPerYearChart({ data }) {
     }));
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.text}>Game Releases Per Year</Text>
             <VictoryChart>
                 <VictoryLine data={chartData} />
@@ -19,6 +19,10 @@ export default function GamesPerYearChart({ data }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 10
+    },
+
     text: {
         fontSize: 18,
         fontWeight: 'bold',

@@ -9,7 +9,7 @@ export default function SalesPerYearChart({ data }) {
     }));
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.text}>Global Sales Per Year</Text>
             <VictoryChart>
                 <VictoryLine data={chartData} />
@@ -19,6 +19,10 @@ export default function SalesPerYearChart({ data }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 0
+    },
+
     text: {
         fontSize: 18,
         fontWeight: 'bold',

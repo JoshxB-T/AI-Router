@@ -6,8 +6,8 @@ import { getAnalyticsDashboard, getFeaturedGame } from '../../api/userService';
 import FeaturedGameBanner from '../../components/FeaturedGameBanner';
 import StatsGrid from '../../components/StatsGrid';
 import TopGamesRow from '../../components/TopGamesRow';
-import PlatformList from '../../components/PlatformList';
-import GenreList from '../../components/GenreList';
+import PlatformList from '../../components/PlatformRow';
+import GenreList from '../../components/GenreRow';
 import GamesPerYearChart from '../../components/GamesPerYearChart';
 import SalesPerYearChart from '../../components/SalesPerYearChart';
 

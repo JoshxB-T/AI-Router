@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import Card from "./Card";
 
 export default function PlatformList({ platforms }) {
@@ -7,12 +7,14 @@ export default function PlatformList({ platforms }) {
         <View style={styles.section}>
             <Text style={styles.title}>Top {platforms.length} Platforms</Text>
 
-            {platforms.map((p, index) => (
-                <Card key={index}>
-                    <Text style={styles.name}>{p.platform}</Text>
-                    <Text style={styles.number}>{p.games} games</Text>
-                </Card>
-            ))}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {platforms.map((p, index) => (
+                    <Card key={index}>
+                        <Text style={styles.name}>{p.platform}</Text>
+                        <Text style={styles.number}>{p.games} games</Text>
+                    </Card>
+                ))}
+            </ScrollView>
         </View>
     );
 }
@@ -26,6 +28,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 8
+    },
+
+    card: {
+        width: 150,
+        marginRight: 8
     },
 
     name: {
