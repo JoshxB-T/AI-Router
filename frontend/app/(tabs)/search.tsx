@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, TextInput, Text, View, StyleSheet } from 'react-native';
+
 import FilterRow from '../../components/FilterRow';
 import { searchGame } from '../../api/userService';
 

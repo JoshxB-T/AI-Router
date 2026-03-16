@@ -7,7 +7,7 @@ import ImageViewer from '@/components/ImageViewer';
 
 const PlaceholderImage = require('@/assets/images/background.png');
 
-export default function PicScreen() {
+export default function ProfileScreen() {
     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 
     const pickImageAsync = async() => {

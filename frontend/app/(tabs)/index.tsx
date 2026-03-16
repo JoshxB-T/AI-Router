@@ -11,7 +11,7 @@ import GenreList from '../../components/GenreRow';
 import GamesPerYearChart from '../../components/GamesPerYearChart';
 import SalesPerYearChart from '../../components/SalesPerYearChart';
 
-export default function Index() {
+export default function IndexScreen() {
     const [dashboard, setDashboard] = useState(null);
 
     useEffect(() => {
