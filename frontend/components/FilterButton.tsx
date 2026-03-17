@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default function TagButton({ label, active, onPress }) {
+export default function FilterButton({ label, active, onPress }) {
     return (
         <TouchableOpacity
             style={[styles.tag, active && styles.activeTag]}

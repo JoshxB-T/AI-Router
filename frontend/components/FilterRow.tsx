@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, Text, ScrollView, StyleSheet } from "react-native";
-import TagButton from "./TagButton";
+
+import FilterButton from '../../components/FilterButton';
 
 export default function FilterRow({ selected, setSelected }) {
     const [isToggled, setIsToggled] = React.useState(false);

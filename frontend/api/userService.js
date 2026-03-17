@@ -17,6 +17,6 @@ export function getFeatuedGame() {
     return apiRequest(ENDPOINTS.FEATURED);
 }
 
-export function searchGame() {
-    return apiRequest(ENDPOINTS.SEARCH_GAME);
+export function searchGame(filter) {
+    return apiRequest(ENDPOINTS.SEARCH_GAME, filter);
 }
