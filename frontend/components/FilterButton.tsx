@@ -1,20 +1,33 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default function FilterButton({ label, active, onPress }) {
+export default function FilterButton(props) {
     return (
         <TouchableOpacity
-            style={[styles.tag, active && styles.activeTag]}
-            onPress={onPress}
+            style={styles.tag}
         >
-            <Text style={[styles.text, active && styles.activeText]}>
-                {label}
-            </Text>
+            <View style={styles.cardContent}>
+                { props.children }
+            </View>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
+        card: {
+        borderRadius: 10,
+        elevation: 4,
+        backgroundColor: '#fff',
+        marginHorizontal: 4,
+        marginVertical: 6,
+        boxShadow: '0px 3px 6px rgba(0,0,0,0.25)'
+    },
+
+    cardContent: {
+        marginHorizontal: 18,
+        marginVertical: 10
+    },
+
     tag: {
         paddingHorizontal: 14,
         paddingVertical: 8,
@@ -31,10 +44,10 @@ const styles = StyleSheet.create({
 
     text: {
         fontSize: 14,
-        color: "#333"
+        color: "black"
     },
 
     activeText: {
-        color: "white"
+        color: "#000000"
     }
 });

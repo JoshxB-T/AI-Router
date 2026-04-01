@@ -5,6 +5,7 @@ import FilterRow from '../../components/FilterRow';
 import { searchGame } from '../../api/userService';
 
 export default function SearchScreen() {
+    const filters = ["Sports", "Role-Playing", "Action"];
     const [filter, setFilter] = useState("All");
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -13,7 +14,7 @@ export default function SearchScreen() {
         setQuery(text);
 
         try {
-            const data = await searchGame(text, filter);
+            const data = await searchGame(filter);
             setResults(data);
         } catch (err) {
             console.error(err);
@@ -23,8 +24,7 @@ export default function SearchScreen() {
     return (
         <View style={styles.container}>
             <FilterRow
-                selected={filter}
-                setSelected={setFilter}
+                filters={filters}
             />
 
             <TextInput

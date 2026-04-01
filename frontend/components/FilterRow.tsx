@@ -1,9 +1,9 @@
 import React from "react";
-import { Pressable, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Pressable, Text, ScrollView, StyleSheet } from "react-native";
 
-import FilterButton from '../../components/FilterButton';
+import FilterButton from './FilterButton';
 
-export default function FilterRow({ selected, setSelected }) {
+export default function FilterRow({ filters }) {
     const [isToggled, setIsToggled] = React.useState(false);
 
     const handleToggle = () => {
@@ -11,28 +11,40 @@ export default function FilterRow({ selected, setSelected }) {
     };
 
     return (
-        <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.row}
-        >
-            <Pressable
-                onPress={handleToggle}
-                style={({ pressed }) => [
-                    styles.button,
-                    {
-                        backgroundColor: isToggled ? '#cc0000' : '#E5E5E5',
-                        opacity: pressed ? 0.7 : 1,
-                    },
-                ]}
+        <View style={styles.section}>
+            <Text style={styles.buttonText}>Genre</Text>
+
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.row}
             >
-                <Text style={styles.buttonText}>Genre</Text>
-            </Pressable>
-        </ScrollView>
+                <Pressable
+                    onPress={handleToggle}
+                    style={({ pressed }) => [
+                        styles.button,
+                        {
+                            backgroundColor: isToggled ? '#cc0000' : '#E5E5E5',
+                            opacity: pressed ? 0.7 : 1,
+                        },
+                    ]}
+                >
+                    {filters.map((filter, index) => (
+                        <FilterButton key={index} style={styles.card}>
+                            <Text style={styles.name}>{filter}</Text>
+                        </FilterButton>
+                    ))}
+                </Pressable>
+            </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    section: {
+        marginTop: 10
+    },
+
     row: {
         marginVertical: 10,
         marginBottom: 10,
@@ -51,5 +63,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-    }
+    },
+
+    
 });
